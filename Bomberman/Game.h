@@ -42,12 +42,15 @@ public:
 	void mouseRelease(int button);
 
 	bool getKey(int key) const;
+	bool getKeyDown(int key) const;
 
 private:
 	bool bPlay; // Continue to play game?
 	bool keys[GLFW_KEY_LAST+1]; // Store key states so that 
 							    // we can have access at any time
 	Scene scene;
+
+	bool keysJustPressed[GLFW_KEY_LAST + 1];
 
 };
 

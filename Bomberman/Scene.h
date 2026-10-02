@@ -19,7 +19,8 @@ public:
 	Scene();
 	~Scene();
 
-	void init();
+	void init(); // Call once, with the OpenGL context ready
+	void loadLevel(int level); // (Re)creates map and player; can be called many times
 	void update(int deltaTime);
 	void render();
 

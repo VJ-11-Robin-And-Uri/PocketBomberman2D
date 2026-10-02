@@ -48,6 +48,7 @@ public:
 	// The change is applied at the end of the current update, never in the middle of it
 	void changeState(StateId id);
 	void quit();
+	StateId getPreviousState() const;
 
 private:
 	void setState(StateId id);
@@ -62,6 +63,7 @@ private:
 
 	GameState *states[NUM_STATES]; // Owned by Game
 	GameState *current;
+	StateId currentId, previousId;
 	int pendingState;
 
 };

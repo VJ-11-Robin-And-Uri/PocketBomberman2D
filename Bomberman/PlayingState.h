@@ -14,5 +14,4 @@ public:
 
 private:
     Scene scene;
-    bool sceneInitialized;
 };

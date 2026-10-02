@@ -7,18 +7,15 @@
 
 PlayingState::PlayingState()
 {
-	sceneInitialized = false;
+	scene.init();
 }
 
 void PlayingState::enter()
 {
 	std::cout << "[state] PLAYING" << std::endl; // TEMPORARY: no screens to see yet
-	// TODO (step 3): replace with scene.loadLevel(1) on a new game; resuming from PAUSED must not reload
-	if (!sceneInitialized)
-	{
-		scene.init();
-		sceneInitialized = true;
-	}
+	// Coming back from the pause menu must not restart the game
+	if (Game::instance().getPreviousState() != PAUSED)
+		scene.loadLevel(1);
 }
 
 void PlayingState::update(int deltaTime)

@@ -16,6 +16,7 @@ Game::Game()
 	for (int i = 0; i < NUM_STATES; i++)
 		states[i] = NULL;
 	current = NULL;
+	currentId = previousId = MENU;
 	pendingState = NO_STATE;
 }
 
@@ -111,10 +112,17 @@ void Game::quit()
 	bPlay = false;
 }
 
+StateId Game::getPreviousState() const
+{
+	return previousId;
+}
+
 void Game::setState(StateId id)
 {
 	if (current != NULL)
 		current->exit();
+	previousId = currentId;
+	currentId = id;
 	current = states[id];
 	current->enter();
 }

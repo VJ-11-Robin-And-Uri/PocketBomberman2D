@@ -32,7 +32,7 @@ Scene::~Scene()
 void Scene::init()
 {
 	initShaders();
-	projection = glm::ortho(0.f, float(SCREEN_WIDTH), float(SCREEN_HEIGHT), 0.f);
+	projection = glm::ortho(0.f, float(GAME_WIDTH), float(GAME_HEIGHT), 0.f);
 }
 
 void Scene::loadLevel(int level)

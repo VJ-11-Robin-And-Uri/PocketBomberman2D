@@ -2,7 +2,28 @@
 #include <GLFW/glfw3.h>
 #include <cstring>
 #include "Game.h"
+#include "MenuState.h"
+#include "PlayingState.h"
+#include "PausedState.h"
+#include "InstructionsState.h"
+#include "CreditsState.h"
+#include "GameOverState.h"
+#include "VictoryState.h"
 
+
+Game::Game()
+{
+	for (int i = 0; i < NUM_STATES; i++)
+		states[i] = NULL;
+	current = NULL;
+	pendingState = NO_STATE;
+}
+
+Game::~Game()
+{
+	for (int i = 0; i < NUM_STATES; i++)
+		delete states[i];
+}
 
 void Game::init()
 {
@@ -10,12 +31,27 @@ void Game::init()
 	memset(keysJustPressed, false, sizeof(keysJustPressed));
 	bPlay = true;
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	scene.init();
+
+	PlayingState *playing = new PlayingState();
+	states[MENU] = new MenuState();
+	states[PLAYING] = playing;
+	states[PAUSED] = new PausedState(playing);
+	states[INSTRUCTIONS_SCREEN] = new InstructionsState();
+	states[CREDITS_SCREEN] = new CreditsState();
+	states[GAME_OVER] = new GameOverState();
+	states[VICTORY] = new VictoryState();
+
+	setState(MENU);
 }
 
 bool Game::update(int deltaTime)
 {
-	scene.update(deltaTime);
+	current->update(deltaTime);
+	if (pendingState != NO_STATE)
+	{
+		setState(StateId(pendingState));
+		pendingState = NO_STATE;
+	}
 	for (auto& key : keysJustPressed)
 		key = false;
 
@@ -25,14 +61,12 @@ bool Game::update(int deltaTime)
 void Game::render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	scene.render();
+	current->render();
 }
 
 void Game::keyPressed(int key)
 {
 	if (key < 0 || key > GLFW_KEY_LAST) return;
-	if(key == GLFW_KEY_ESCAPE) // Escape code
-		bPlay = false;
 	keys[key] = true;
 	keysJustPressed[key] = true;
 }
@@ -67,3 +101,20 @@ bool Game::getKeyDown(int key) const
 	return keysJustPressed[key];
 }
 
+void Game::changeState(StateId id)
+{
+	pendingState = id;
+}
+
+void Game::quit()
+{
+	bPlay = false;
+}
+
+void Game::setState(StateId id)
+{
+	if (current != NULL)
+		current->exit();
+	current = states[id];
+	current->enter();
+}

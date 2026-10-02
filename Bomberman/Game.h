@@ -3,7 +3,10 @@
 
 
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include "GameState.h"
+
+class ShaderProgram;
 
 
 #define GAME_WIDTH 160
@@ -50,8 +53,12 @@ public:
 	void quit();
 	StateId getPreviousState() const;
 
+	// Shader shared by every state; Game::render leaves it in use with the projection set
+	ShaderProgram &getTexProgram();
+
 private:
 	void setState(StateId id);
+	void initShaders();
 
 private:
 	enum { NO_STATE = -1 };
@@ -65,6 +72,9 @@ private:
 	GameState *current;
 	StateId currentId, previousId;
 	int pendingState;
+
+	ShaderProgram *texProgram; // Owned by Game
+	glm::mat4 projection;
 
 };
 

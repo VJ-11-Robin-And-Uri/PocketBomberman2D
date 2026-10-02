@@ -7,7 +7,7 @@
 
 PlayingState::PlayingState()
 {
-	scene.init();
+	scene.init(Game::instance().getTexProgram());
 }
 
 void PlayingState::enter()

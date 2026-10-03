@@ -1,7 +1,27 @@
+#include <cstring>
+#include <iostream>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "MenuState.h"
 #include "Game.h"
 
+
+#define TITLE "POCKET BOMBERMAN"
+#define TITLE_Y 20
+#define OPTIONS_X 40
+#define OPTIONS_Y 56
+#define OPTIONS_STEP 16
+#define CURSOR_X 28
+
+static const char *OPTION_NAMES[] = { "JUGAR", "INSTRUCCIONES", "CREDITOS", "SALIR" };
+
+
+MenuState::MenuState()
+{
+	selected = PLAY;
+	if (!text.init(Game::instance().getTexProgram()))
+		std::cout << "Could not load images/font.png" << std::endl;
+}
 
 void MenuState::enter()
 {
@@ -26,7 +46,10 @@ void MenuState::update(int deltaTime)
 
 void MenuState::render()
 {
-	//TODO: Render menu options and highlight the selected one
+	text.render(TITLE, glm::vec2((GAME_WIDTH - 8 * int(strlen(TITLE))) / 2, TITLE_Y));
+	for (int i = 0; i < NUM_OPTIONS; i++)
+		text.render(OPTION_NAMES[i], glm::vec2(OPTIONS_X, OPTIONS_Y + i * OPTIONS_STEP));
+	text.render(">", glm::vec2(CURSOR_X, OPTIONS_Y + selected * OPTIONS_STEP));
 }
 
 void MenuState::confirm()

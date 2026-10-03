@@ -1,5 +1,4 @@
 #include "Text.h"
-#include <cctype>
 
 #define FONT_FILE "images/font.png"
 #define GLYPH_SIZE 8
@@ -34,7 +33,7 @@ void Text::render(const std::string& text, const glm::vec2& position)
 		return;
 
 	glm::vec2 cursor = position;
-	for (unsigned char c : toUpperCase(text))
+	for (unsigned char c : text)
 	{
 		if (c == '\n')
 		{
@@ -51,14 +50,4 @@ void Text::render(const std::string& text, const glm::vec2& position)
 		}
 		cursor.x += GLYPH_SIZE;
 	}
-}
-
-std::string Text::toUpperCase(const std::string& text)
-{
-	std::string upperText;
-	for (char c : text)
-	{
-		upperText += std::toupper(static_cast<unsigned char>(c));
-	}
-	return upperText;
 }

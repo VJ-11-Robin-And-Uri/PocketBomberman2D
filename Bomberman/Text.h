@@ -7,8 +7,9 @@
 #include "ShaderProgram.h"
 
 // Draws text with the bitmap font in images/font.png: 8x8 cells, 16 columns x 14 rows,
-// the character with code c is at index c - 32. Text is always drawn in uppercase.
-// '\n' starts a new line. Only plain ASCII is supported (UTF-8 accents are not).
+// the character with code c is at index c - 32. The font is Press Start 2P (SIL OFL, see
+// images/Press-Start-2P-OFL.txt). '\n' starts a new line. Text is drawn as it is written
+// (upper and lower case); only plain ASCII is supported (UTF-8 accents are not).
 
 class Text
 {
@@ -23,8 +24,6 @@ public:
 private:
 	Text(const Text&);
 	Text& operator=(const Text&);
-
-	static std::string toUpperCase(const std::string& text);
 
 private:
 	Texture fontTexture;

@@ -13,16 +13,32 @@
   <ItemGroup>
     <ClInclude Include="AnimKeyframes.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="MenuState.h" />
+    <ClInclude Include="PlayingState.h" />
+    <ClInclude Include="PausedState.h" />
+    <ClInclude Include="InstructionsState.h" />
+    <ClInclude Include="CreditsState.h" />
+    <ClInclude Include="GameOverState.h" />
+    <ClInclude Include="VictoryState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="PlayingState.cpp" />
+    <ClCompile Include="PausedState.cpp" />
+    <ClCompile Include="InstructionsState.cpp" />
+    <ClCompile Include="CreditsState.cpp" />
+    <ClCompile Include="GameOverState.cpp" />
+    <ClCompile Include="VictoryState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -30,6 +46,7 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

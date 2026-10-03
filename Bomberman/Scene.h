@@ -19,19 +19,16 @@ public:
 	Scene();
 	~Scene();
 
-	void init();
+	void init(ShaderProgram &program); // Call once; the program is shared and owned by Game
+	void loadLevel(int level); // (Re)creates map and player; can be called many times
 	void update(int deltaTime);
 	void render();
 
 private:
-	void initShaders();
-
-private:
 	TileMap *map;
 	Player *player;
-	ShaderProgram texProgram;
+	ShaderProgram *texProgram;
 	float currentTime;
-	glm::mat4 projection;
 
 };
 

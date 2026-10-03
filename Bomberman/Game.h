@@ -3,7 +3,10 @@
 
 
 #include <GLFW/glfw3.h>
-#include "Scene.h"
+#include <glm/glm.hpp>
+#include "GameState.h"
+
+class ShaderProgram;
 
 
 #define GAME_WIDTH 160
@@ -20,20 +23,21 @@ class Game
 {
 
 private:
-	Game() {}
-	
+	Game();
+	~Game();
+
 public:
 	static Game &instance()
 	{
 		static Game G;
-	
+
 		return G;
 	}
-	
+
 	void init();
 	bool update(int deltaTime);
 	void render();
-	
+
 	// Input callback methods
 	void keyPressed(int key);
 	void keyReleased(int key);
@@ -42,16 +46,38 @@ public:
 	void mouseRelease(int button);
 
 	bool getKey(int key) const;
+	bool getKeyDown(int key) const;
+
+	// The change is applied at the end of the current update, never in the middle of it
+	void changeState(StateId id);
+	void quit();
+	StateId getPreviousState() const;
+
+	// Shader shared by every state; Game::render leaves it in use with the projection set
+	ShaderProgram &getTexProgram();
 
 private:
+	void setState(StateId id);
+	void initShaders();
+
+private:
+	enum { NO_STATE = -1 };
+
 	bool bPlay; // Continue to play game?
-	bool keys[GLFW_KEY_LAST+1]; // Store key states so that 
+	bool keys[GLFW_KEY_LAST+1]; // Store key states so that
 							    // we can have access at any time
-	Scene scene;
+	bool keysJustPressed[GLFW_KEY_LAST + 1];
+
+	GameState *states[NUM_STATES]; // Owned by Game
+	GameState *current;
+	StateId currentId, previousId;
+	int pendingState;
+
+	ShaderProgram *texProgram; // Owned by Game
+	glm::mat4 projection;
 
 };
 
 
 #endif // _GAME_INCLUDE
-
 

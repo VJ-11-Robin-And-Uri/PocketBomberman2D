@@ -35,6 +35,7 @@ public:
 	int animation() const;
 	
 	void setPosition(const glm::vec2 &pos);
+	void setTexCoordDispl(const glm::vec2 &displ); // Picks a cell of the spritesheet without using animations
 
 private:
 	Texture *texture;
